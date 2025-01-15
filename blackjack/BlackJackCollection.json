@@ -1,0 +1,35 @@
+{
+  "info": {
+    "name": "Blackjack API",
+    "description": "Colección para probar la API de Blackjack",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Iniciar partida",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8080/game/new?playerName=TuNombre",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["game", "new"],
+          "query": [
+            {
+              "key": "playerName",
+              "value": "TuNombre"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

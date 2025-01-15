@@ -1,0 +1,11 @@
+BlackJack testing
+
+http://localhost:8080/game/new?playerName=Jose
+
+Hit:
+
+http://localhost:8080/game/decision?option=1&gameId=675b2f2039191630176cf4ae
+
+HACER UN IF AL FINAL USANDO LOS ENUMS PARA DEFINIR EL ESTADO DEL JUEGO
+
+
