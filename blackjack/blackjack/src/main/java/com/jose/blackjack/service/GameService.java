@@ -4,10 +4,12 @@ import com.jose.blackjack.enums.GameState;
 import com.jose.blackjack.model.*;
 import com.jose.blackjack.repos.mongo.GameRepository;
 import com.jose.blackjack.repos.sql.PlayerRepository;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
+import java.sql.SQLOutput;
 import java.util.List;
 
 import static reactor.core.publisher.Mono.just;
@@ -47,7 +49,13 @@ public class GameService {
         game.getPlayer().setHand(playerHand);
         game.getDealer().setHand(dealerHand);
 
+
         int playerHandValue = calculateHandValue(playerHand);
+    //        game.getPlayer().setHandValue(playerHandValue);
+        int dealerHandValue = calculateHandValue(dealerHand);
+
+        System.out.println("Valor de la mano: " + playerHandValue);
+        System.out.println("Valor de la mano del dealer: "+ dealerHandValue);
 
 
         if (playerHandValue == 21) {
@@ -73,7 +81,7 @@ public class GameService {
 
         return playerRepository.findById(game.getPlayer().getPlayerId()) // Recuperar al Player desde la base de datos
                 .flatMap(player -> {
-                    // Ya que usamos @Transient debo reasignar la mano asi como el Playah
+                    // Ya que usamos @Transient debo reasignar la mano asi como el PLayah
                     player.setHand(game.getPlayer().getHand());
                     game.setPlayer(player);
 
@@ -243,7 +251,56 @@ public class GameService {
         return totalValue;
     }
 
+    public Mono<Game> getGameDetails(String gameId) {
+        return gameRepository.findById(gameId);
+    }
+
 
 }
 
 
+//    // UNDER CONSTRUCTION - doubleOption with the database hand retrieve logic //
+//    public Mono<Game> doubleOption() {
+//
+//        System.out.println("El nota hace Double");
+//
+//        return playerRepository.findById(game.getPlayer().getPlayerId()) // Recuperar al Player desde la base de datos
+//                .flatMap(player -> {
+//                    // Ya que usamos @Transient debo reasignar la mano asi como el PLayah
+//                    player.setHand(game.getPlayer().getHand());
+//                    game.setPlayer(player);
+//
+//
+//                    Card newCard = game.getDeck().dealCards(1).get(0);
+//                    game.getPlayer().hit(newCard);
+//
+//                    int playerHandValue = game.getPlayer().getHandValue();
+//                    System.out.println("Valor de la mano: " + playerHandValue);
+//
+//
+//                    if (playerHandValue > 21) {
+//                        System.out.println("El jugador se ha pasado de 21. ¡La casa gana!");
+//
+//                        game.setState(GameState.HOUSE_WON);
+//                        return just(game);
+//                    }
+//
+//
+//                    if (playerHandValue == 21) {
+//                        if (game.getState() == GameState.IN_PROGRESS)
+//                            game.setState(GameState.PLAYER_WON);
+//                        incrementPlayerScore(game.getPlayer());
+//
+//                        System.out.println("¡Has alcanzado 21! Veamos qué hace el dealer...");
+//                        return just(game);
+//                    }
+//
+//
+//                    return playerRepository.save(player)
+//                            .flatMap(savedPlayer -> {
+//                                game.setPlayer(savedPlayer);
+//                                return gameRepository.save(game);
+//                            });
+//                });
+//
+//    }

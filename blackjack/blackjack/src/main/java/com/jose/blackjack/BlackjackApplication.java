@@ -13,6 +13,8 @@ public class BlackjackApplication {
     // TODO mirar el metodo de Gwenael para interactuar con el Mongo
     // TODO dockerizar
 
+    // TODO mirar los doble returns
+
 
     public static void main(String[] args) {
         SpringApplication.run(BlackjackApplication.class, args);

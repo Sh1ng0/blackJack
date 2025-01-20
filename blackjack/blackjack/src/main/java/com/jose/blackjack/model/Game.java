@@ -27,7 +27,7 @@ public class Game {
     private Player player;
     private Dealer dealer;
     private Deck deck;
-    private boolean finished;
+
     private GameState state;
 
 
@@ -47,7 +47,7 @@ public class Game {
     }
 
     public Game() {
-        // Solo asignar IN_PROGRESS si no hay un estado previo
+
         if (state == null) {
             state = GameState.IN_PROGRESS;
         }
@@ -86,7 +86,7 @@ public class Game {
                 ", player=" + player +
                 ", dealer=" + dealer +
                 ", deck=" + deck +
-                ", finished=" + finished +
+
                 '}';
     }
 }

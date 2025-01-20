@@ -6,6 +6,7 @@ import com.jose.blackjack.model.Player;
 import com.jose.blackjack.service.GameService;
 import com.jose.blackjack.service.PlayerService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -114,4 +115,19 @@ public class GameController {
         return playerService.updatePlayerName(playerId, newName)
                 .switchIfEmpty(Mono.error(new PlayerNotFoundException("Player not found")));
     }
+
+    @GetMapping("/game/{id}")
+    @Operation(
+            summary = "Obtener los detalles de una partida de Blackjack",
+            description = "Obtiene los detalles de una partida específica de Blackjack usando su ID.",
+            tags = { "Juego" }
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Detalles de la partida obtenidos con éxito"),
+            @ApiResponse(responseCode = "404", description = "Partida no encontrada")
+    })
+    public Mono<Game> getGameById(@PathVariable("id") @Parameter(description = "ID único de la partida") String gameId) {
+        return gameService.getGameDetails(gameId);
+    }
+
 }

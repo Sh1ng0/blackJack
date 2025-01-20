@@ -1,6 +1,7 @@
 package com.jose.blackjack.model;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.relational.core.mapping.Column;
@@ -23,6 +24,7 @@ public class Player {
     private int score;
 
     @Transient
+//    @JsonProperty("hand value: ")
     private List<Card> hand = new ArrayList<>();
 
     public Player() {
@@ -85,4 +87,8 @@ public class Player {
                 '}';
     }
 
+    public void setHandValue(int playerHandValue) {
+
+
+    }
 }
